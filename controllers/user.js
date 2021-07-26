@@ -2,6 +2,7 @@ const catchAsync = require("./../utils/catchAsync");
 const userModel = require("./../models/User");
 const appError = require("./../utils/appError");
 const jwt = require("jsonwebtoken");
+const spotifyController = require('./../controllers/spotify')
 
 // Make a json web token //
 const signToken = (id) => {
@@ -40,5 +41,11 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 3) Send the JWT to the client
   const token = signToken(user._id);
-  res.status(201).json({ status: "success", token });
+  const spotifyToken = spotifyController.login_to_spotify()
+
+  res.status(201).json({ status: "success", token, spotifyToken });
+
+
 });
+
+
