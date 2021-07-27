@@ -5,14 +5,13 @@ const jwt = require("jsonwebtoken");
 const spotifyController = require('./../controllers/spotify')
 
 // Make a json web token //
-const signToken = (id) => {
+const signToken = id => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES,
+    expiresIn: process.env.JWT_EXPIRES_IN
   });
 };
 
 exports.singup = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   const user = await userModel.create({
     username: req.body.username,
     email: req.body.email,
@@ -25,15 +24,15 @@ exports.singup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { password, username } = req.body;
 
   // 1) Check if the email and the password actualy exists
-  if (!email || !password) {
-    return next(new appError("Please provide an email and password!", 400));
+  if (!username || !password) {
+    return next(new appError("Please provide a username and password!", 400));
   }
 
   // 2) Check if the user exists && if the password is correct
-  const user = await userModel.findOne({ email: email }).select("+password");
+  const user = await userModel.findOne({ username: username }).select("+password");
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new appError("Incorrect email or password", 401));
@@ -41,11 +40,9 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 3) Send the JWT to the client
   const token = signToken(user._id);
-  const spotifyToken = spotifyController.login_to_spotify()
+  const spotifyToken = spotifyController.login_to_spotify(req, res)
 
-  res.status(201).json({ status: "success", token, spotifyToken });
-
-
+  res.status(201).json({ status: "success", token, spotifyToken, user });
 });
 
 

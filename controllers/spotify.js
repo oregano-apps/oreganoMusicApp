@@ -22,10 +22,11 @@ exports.getRefreshToken = (req, res) => {
         console.log(err)
         return null
       })
-  })
+  }
   
 
 exports.login_to_spotify = (req, res) => {
+    code = req.body.code
     const spotifyApi = new SpotifyWebApi({
       redirectUri: process.env.REDIRECT_URI,
       clientId: process.env.CLIENT_ID,
@@ -35,6 +36,7 @@ exports.login_to_spotify = (req, res) => {
     spotifyApi
       .authorizationCodeGrant(code)
       .then(data => {
+        console.log(data.body)
         return ({
           accessToken: data.body.access_token,
           refreshToken: data.body.refresh_token,
@@ -42,8 +44,8 @@ exports.login_to_spotify = (req, res) => {
         })
       })
       .catch(err => {
-        return null
         console.log(err)
+        return null
       })
   }
   
