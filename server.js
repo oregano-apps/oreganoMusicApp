@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const cors = require("cors")
 
 const usersRouter = require("./routes/users");
+const songsRouter = require('./routes/songs')
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(cors())
 
 // Routes //
 app.use("/api/users", usersRouter);
+app.use("/api/songs", songsRouter);
 
 app.listen(8800, () => {
   console.log("Backend server in running!!");
