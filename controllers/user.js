@@ -40,9 +40,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // 3) Send the JWT to the client
   const token = signToken(user._id);
-  const spotifyToken = spotifyController.login_to_spotify(req, res)
-
-  res.status(201).json({ status: "success", token, spotifyToken, user });
+  res.status(201).json({ status: "success", token, user });
 });
 
 
