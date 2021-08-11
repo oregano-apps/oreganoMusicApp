@@ -11,16 +11,16 @@ const SongSchema = mongoose.Schema(
         max: [30, 'Song name needs to be 30 characters long of shorter']
       },
       artist: {
-        type: mongoose.Schema.ObjectId,
-        ref: "Artist"
+        type: String,
+        default: 'Unknown'
       },
       user: {
         type: mongoose.Schema.ObjectId,
         ref: "User"
       },
-      length: {
+      duration: {
           type: String,
-          required: [true, 'Song must have a length']
+          required: [true, 'Song must have a duration']
       },
       audio: {
           type: String,
@@ -35,4 +35,4 @@ const SongSchema = mongoose.Schema(
 
 
 
-module.exports = mongoose.model("Song", UserSchema);
+module.exports = mongoose.model("Song", SongSchema);

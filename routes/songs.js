@@ -12,6 +12,9 @@ router.post("/spotifyLogin", spotifyController.login_to_spotify)
 router.post("/refresh", spotifyController.getRefreshToken)
 
 router.post('/createSong', songController.createSong)
-router.post('/uploadAudio', upload.single('soundBlob'), songController.uploadAudio)
+router.post('/uploadAudio', upload.single('file'), songController.uploadAudio)
+
+router.get('/song/:name', songController.getSongByName)
+router.get('/getAllSongs', songController.getAllSongs)
 
 module.exports = router;
