@@ -1,7 +1,7 @@
 const SpotifyWebApi = require("spotify-web-api-node")
+const catchAsync = require('./../utils/catchAsync')
 
-
-exports.getRefreshToken = (req, res) => {
+exports.getRefreshToken = catchAsync(async (req, res, next) => {
     const refreshToken = req.body.refreshToken
     const spotifyApi = new SpotifyWebApi({
       redirectUri: process.env.REDIRECT_URI,
@@ -10,7 +10,7 @@ exports.getRefreshToken = (req, res) => {
       refreshToken,
     })
   
-    spotifyApi
+    await spotifyApi
       .refreshAccessToken()
       .then(data => {
         res.status(200).json({
@@ -22,10 +22,10 @@ exports.getRefreshToken = (req, res) => {
         console.log(err)
         return null
       })
-  }
+  })
   
 
-exports.login_to_spotify = (req, res) => {
+exports.login_to_spotify = catchAsync(async (req, res, next) => {
     code = req.body.code
     const spotifyApi = new SpotifyWebApi({
       redirectUri: process.env.REDIRECT_URI,
@@ -33,7 +33,7 @@ exports.login_to_spotify = (req, res) => {
       clientSecret: process.env.CLIENT_SECRET,
     })
   
-    spotifyApi
+    await spotifyApi
       .authorizationCodeGrant(code)
       .then(data => {
         res.status(200).json({
@@ -46,5 +46,5 @@ exports.login_to_spotify = (req, res) => {
         console.log(err)
         return null
       })
-  }
+  })
   

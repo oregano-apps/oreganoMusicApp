@@ -43,4 +43,17 @@ exports.login = catchAsync(async (req, res, next) => {
   res.status(201).json({ status: "success", token, user });
 });
 
+exports.likeSong = catchAsync(async (req, res, next) => {
+  const user = await userModel.findById(req.body.userId)
+  if (req.body.alreadyFavorite == true){
+    await userModel.updateOne( { _id: user._id }, {$set: { lovedSongs: user.lovedSongs.filter(
+      (song) => song !== req.body.song
+    ) }})
+    res.status(200).json({status: "success", message: "The song has liked by you!"})
+  } else {
+    await userModel.updateOne( { _id: user._id }, {$set: { lovedSongs: [...user.lovedSongs, req.body.song] }})
+    res.status(200).json({status: "success", message: "The song has liked by you!"})
+  }
+})
+
 

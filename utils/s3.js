@@ -2,25 +2,28 @@ require('dotenv').config()
 const fs = require('fs')
 const S3 = require('aws-sdk/clients/s3')
 
-const bucketName = process.env.AWS_BUCKET_NANE
-const region = process.env.AWS_BUCKET_REGION
-const accessKeyId = process.env.AWS_ACCESS_KEY
-const secretAccessKey = process.env.AWS_SECRET_KEY
+const bucketName = "oregano-music-app"
+const region = "us-east-2"
+const accessKeyId = "AKIA4ZFKOIQQ7MQFXFHR"
+const secretAccessKey = "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"
 
 console.log(process.env.AWS_BUCKET_NANE)
+console.log(process.env.AWS_BUCKET_REGION)
+console.log(process.env.AWS_ACCESS_KEY)
+console.log(process.env.AWS_SECRET_KEY)
 
 const s3 = new S3({
-  region: process.env.AWS_BUCKET_REGION,
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_KEY
+  region: region,
+  accessKeyId: accessKeyId,
+  secretAccessKey: secretAccessKey
 })
 
 // uploads a file to s3
-function uploadFileToS3(file) {
-  const fileStream = fs.createReadStream(file.path)
+async function uploadFileToS3(file) {
+  const fileStream =  await fs.createReadStream(file.path)
 
   const uploadParams = {
-    Bucket: process.env.AWS_BUCKET_NANE,
+    Bucket: bucketName,
     Body: fileStream,
     Key: file.filename
   }

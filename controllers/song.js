@@ -34,15 +34,13 @@ exports.getAllSongs = catchAsync(async (req, res, next) => {
 exports.uploadAudio = catchAsync(async (req, res, next) => {
     const audioPath = req.file
     const result = await uploadFileToS3(audioPath)
-    res.send({audioPath: `/images/${result.Key}`})
+    console.log("audiopath ",audioPath)
+    res.send(audioPath.filename)
 })
 
 
 exports.getAudio = catchAsync(async (req, res, next) => {
     const key = req.params.key
-    const readStream = getFileStream(key)
-    console.log(readStream)
-    console.log(key)
-
+    const readStream = await getFileStream(key)
     readStream.pipe(res)
 })
