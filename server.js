@@ -8,10 +8,11 @@ const songsRouter = require('./routes/songs')
 
 const app = express();
 
+
 dotenv.config();
 
 mongoose.connect(
-  process.env.MONGO_URL,
+  "mongodb+srv://almog674:almog290718@oregano-music-app.hn9y8.mongodb.net/?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

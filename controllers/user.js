@@ -5,9 +5,11 @@ const jwt = require("jsonwebtoken");
 const spotifyController = require('./../controllers/spotify')
 
 // Make a json web token //
+//process.env.JWT_SECRET
+//
 const signToken = id => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN
+  return jwt.sign({ id }, "i-walking-on-the-same-street-and-its-looking-like-it-looks-everyday", {
+    expiresIn: "90d"
   });
 };
 

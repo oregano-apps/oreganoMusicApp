@@ -37,7 +37,8 @@ exports.uploadFileToS3 = uploadFileToS3
 function getFileStream(fileKey) {
   const downloadParams = {
     Key: fileKey,
-    Bucket: process.env.AWS_BUCKET_NANE
+    //Bucket: process.env.AWS_BUCKET_NANE
+    Bucket: "oregano-music-app"
   }
 
   return s3.getObject(downloadParams).createReadStream()

@@ -4,9 +4,12 @@ const catchAsync = require('./../utils/catchAsync')
 exports.getRefreshToken = catchAsync(async (req, res, next) => {
     const refreshToken = req.body.refreshToken
     const spotifyApi = new SpotifyWebApi({
-      redirectUri: process.env.REDIRECT_URI,
-      clientId: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
+      //redirectUri: process.env.REDIRECT_URI,
+      //clientId: process.env.CLIENT_ID,
+      //clientSecret: process.env.CLIENT_SECRET,
+      redirectUri: "http://localhost:3000",
+      clientId: "44ac6a7030a545d681e0ff5e34777f28",
+      clientSecret: "180e8d7fa7c84caa964b7b7ab4fa787f",
       refreshToken,
     })
   
@@ -28,9 +31,12 @@ exports.getRefreshToken = catchAsync(async (req, res, next) => {
 exports.login_to_spotify = catchAsync(async (req, res, next) => {
     code = req.body.code
     const spotifyApi = new SpotifyWebApi({
-      redirectUri: process.env.REDIRECT_URI,
-      clientId: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
+      // redirectUri: process.env.REDIRECT_URI,
+      // clientId: process.env.CLIENT_ID,
+      // clientSecret: process.env.CLIENT_SECRET,
+      redirectUri: "http://localhost:3000",
+      clientId: "44ac6a7030a545d681e0ff5e34777f28",
+      clientSecret: "180e8d7fa7c84caa964b7b7ab4fa787f",
     })
   
     await spotifyApi
